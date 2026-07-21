@@ -1,0 +1,30 @@
+// Limiteur en mémoire (fenêtre fixe) — suffisant pour une seule instance ou le
+// développement. En production multi-instance, remplacez `buckets` par un
+// stockage partagé (ex: Upstash Redis) pour que la limite soit globale.
+interface Bucket {
+  count: number;
+  resetAt: number;
+}
+
+const buckets = new Map<string, Bucket>();
+
+export function rateLimit(
+  key: string,
+  limit: number,
+  windowMs: number
+): { allowed: boolean; retryAfterSeconds: number } {
+  const now = Date.now();
+  const bucket = buckets.get(key);
+
+  if (!bucket || bucket.resetAt <= now) {
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
+    return { allowed: true, retryAfterSeconds: 0 };
+  }
+
+  if (bucket.count >= limit) {
+    return { allowed: false, retryAfterSeconds: Math.ceil((bucket.resetAt - now) / 1000) };
+  }
+
+  bucket.count += 1;
+  return { allowed: true, retryAfterSeconds: 0 };
+}
