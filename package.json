@@ -40,7 +40,10 @@
     "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.427.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@radix-ui/react-label": "^2.1.0"
+    "@radix-ui/react-label": "^2.1.0",
+    "gray-matter": "^4.0.3",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.15",

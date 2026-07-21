@@ -84,6 +84,9 @@ export default function LandingPage() {
             SwiftSaaS
           </span>
           <nav className="flex items-center gap-4">
+            <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+              Blog
+            </Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground">
               Connexion
             </Link>
@@ -191,6 +194,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground sm:flex-row">
           <span>© {new Date().getFullYear()} SwiftSaaS. Tous droits réservés.</span>
           <div className="flex gap-4">
+            <Link href="/blog">Blog</Link>
             <Link href="/legal/mentions-legales">Mentions légales</Link>
             <Link href="/legal/cgv">CGV</Link>
             <Link href="/legal/confidentialite">Confidentialité</Link>
