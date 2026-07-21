@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { verserRecompensesEnAttente } from "@/lib/referral-payouts";
 
 // Stripe exige le corps brut (non parsé) pour vérifier la signature.
 export async function POST(request: Request) {
@@ -79,6 +80,30 @@ export async function POST(request: Request) {
             where: { stripeSubscriptionId: facture.subscription as string },
             data: { status: "PAST_DUE" },
           });
+        }
+        break;
+      }
+
+      // Émis pour un compte Stripe Connect (Express) quand son statut change,
+      // notamment à la fin de l'onboarding hébergé. Nécessite que le webhook
+      // écoute aussi les événements des comptes connectés (case à cocher
+      // "Listen to events on Connected accounts" dans le dashboard Stripe).
+      case "account.updated": {
+        const compte = event.data.object as Stripe.Account;
+        const parrain = await prisma.user.findUnique({
+          where: { stripeConnectAccountId: compte.id },
+        });
+        if (parrain) {
+          const activesMaintenant = Boolean(compte.payouts_enabled);
+          if (activesMaintenant !== parrain.stripeConnectPayoutsEnabled) {
+            await prisma.user.update({
+              where: { id: parrain.id },
+              data: { stripeConnectPayoutsEnabled: activesMaintenant },
+            });
+          }
+          if (activesMaintenant) {
+            await verserRecompensesEnAttente(parrain.id);
+          }
         }
         break;
       }
@@ -178,4 +203,8 @@ async function creerRecompenseParrainageSiEligible(
       currency: prixLigne?.currency ?? "eur",
     },
   });
+
+  // Si le parrain a déjà un compte Connect actif, le verse tout de suite au
+  // lieu d'attendre le prochain account.updated.
+  await verserRecompensesEnAttente(utilisateur.referredById);
 }

@@ -32,6 +32,11 @@ model User {
   referrals     User[]    @relation("UserReferrals")
   referralRewards ReferralReward[]
 
+  // Compte Stripe Connect (Express) du parrain, pour recevoir ses commissions
+  // par virement automatique.
+  stripeConnectAccountId      String?  @unique
+  stripeConnectPayoutsEnabled Boolean  @default(false)
+
   accounts      Account[]
   sessions      Session[]
   subscriptions Subscription[]
@@ -193,6 +198,7 @@ model ReferralReward {
   amountCents    Int
   currency       String   @default("eur")
   status         ReferralRewardStatus @default(PENDING)
+  stripeTransferId String?
 
   createdAt      DateTime @default(now())
 

@@ -1,8 +1,9 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Gift, Users, Wallet } from "lucide-react";
+import { Gift, Users, Wallet, CheckCircle2, CircleDashed } from "lucide-react";
 import ParrainageLinkCopy from "./copy-link";
+import ConnectStripeButton from "./connect-button";
 
 const STATUTS_LABELS: Record<string, string> = {
   PENDING: "En attente",
@@ -48,6 +49,35 @@ export default async function ParrainagePage() {
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Paiement automatique</CardTitle>
+          <CardDescription>
+            Connecte un compte Stripe pour recevoir tes commissions par virement, dès qu&apos;un
+            filleul paye — sans action de ta part.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {utilisateur.stripeConnectPayoutsEnabled ? (
+            <p className="flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400">
+              <CheckCircle2 className="h-4 w-4" />
+              Compte connecté — tes prochaines récompenses seront versées automatiquement.
+            </p>
+          ) : utilisateur.stripeConnectAccountId ? (
+            <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <CircleDashed className="h-4 w-4" />
+              Onboarding démarré mais pas encore terminé — complète-le pour activer les virements.
+            </p>
+          ) : (
+            <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <CircleDashed className="h-4 w-4" />
+              Aucun compte connecté pour l&apos;instant.
+            </p>
+          )}
+          <ConnectStripeButton dejaConnecte={Boolean(utilisateur.stripeConnectAccountId)} />
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 sm:grid-cols-3">
         <Card>
           <CardHeader>
@@ -88,8 +118,8 @@ export default async function ParrainagePage() {
         <CardHeader>
           <CardTitle className="text-base">Historique des récompenses</CardTitle>
           <CardDescription>
-            Les récompenses sont créées automatiquement au premier paiement d&apos;un filleul, et
-            réglées manuellement pour l&apos;instant (pas de virement automatique).
+            Créées automatiquement au premier paiement d&apos;un filleul, puis versées par
+            virement Stripe dès que ton compte est connecté et activé.
           </CardDescription>
         </CardHeader>
         <CardContent>
