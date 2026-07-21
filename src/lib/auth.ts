@@ -6,6 +6,9 @@ import { prisma } from "@/lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  // Requis en production (Vercel, tout hébergeur derrière un proxy) : sans ça,
+  // Auth.js rejette le Host header en environnement serverless/production.
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",

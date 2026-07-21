@@ -113,6 +113,15 @@ const STATUTS_STRIPE_VERS_PRISMA: Record<string, string> = {
 async function synchroniserAbonnement(userId: string, abonnementStripe: Stripe.Subscription) {
   const statut = STATUTS_STRIPE_VERS_PRISMA[abonnementStripe.status] ?? "INCOMPLETE";
 
+  // Depuis les versions d'API Stripe récentes, les dates de période ne sont
+  // plus au niveau de l'abonnement mais de chaque ligne (subscription item) —
+  // nécessaire pour supporter plusieurs lignes avec des cycles différents.
+  const premiereLigne = abonnementStripe.items.data[0] as
+    | (Stripe.SubscriptionItem & { current_period_start?: number; current_period_end?: number })
+    | undefined;
+  const debutPeriode = premiereLigne?.current_period_start ?? (abonnementStripe as any).current_period_start;
+  const finPeriode = premiereLigne?.current_period_end ?? (abonnementStripe as any).current_period_end;
+
   await prisma.subscription.upsert({
     where: { stripeSubscriptionId: abonnementStripe.id },
     create: {
@@ -121,16 +130,52 @@ async function synchroniserAbonnement(userId: string, abonnementStripe: Stripe.S
       stripePriceId: abonnementStripe.items.data[0]?.price.id ?? "",
       stripeCustomerId: abonnementStripe.customer as string,
       status: statut as any,
-      currentPeriodStart: new Date(abonnementStripe.current_period_start * 1000),
-      currentPeriodEnd: new Date(abonnementStripe.current_period_end * 1000),
+      currentPeriodStart: new Date(debutPeriode * 1000),
+      currentPeriodEnd: new Date(finPeriode * 1000),
       cancelAtPeriodEnd: abonnementStripe.cancel_at_period_end,
     },
     update: {
       status: statut as any,
-      currentPeriodStart: new Date(abonnementStripe.current_period_start * 1000),
-      currentPeriodEnd: new Date(abonnementStripe.current_period_end * 1000),
+      currentPeriodStart: new Date(debutPeriode * 1000),
+      currentPeriodEnd: new Date(finPeriode * 1000),
       cancelAtPeriodEnd: abonnementStripe.cancel_at_period_end,
       stripePriceId: abonnementStripe.items.data[0]?.price.id ?? "",
+    },
+  });
+
+  if (statut === "ACTIVE") {
+    await creerRecompenseParrainageSiEligible(userId, abonnementStripe);
+  }
+}
+
+// Commission versée au parrain sur le premier paiement de son filleul.
+// Un seul reward par filleul (contrainte unique sur referredUserId) : ne
+// se déclenche donc qu'une fois, même si l'abonnement repasse par ACTIVE
+// plusieurs fois (réactivation, changement de plan...).
+async function creerRecompenseParrainageSiEligible(
+  userId: string,
+  abonnementStripe: Stripe.Subscription
+) {
+  const utilisateur = await prisma.user.findUnique({ where: { id: userId } });
+  if (!utilisateur?.referredById) return;
+
+  const dejaRecompense = await prisma.referralReward.findUnique({
+    where: { referredUserId: userId },
+  });
+  if (dejaRecompense) return;
+
+  const prixLigne = abonnementStripe.items.data[0]?.price;
+  const prixUnitaire = prixLigne?.unit_amount ?? 0;
+  const taux = Number(process.env.REFERRAL_COMMISSION_RATE ?? "0.2");
+  const montant = Math.round(prixUnitaire * taux);
+  if (montant <= 0) return;
+
+  await prisma.referralReward.create({
+    data: {
+      referrerId: utilisateur.referredById,
+      referredUserId: userId,
+      amountCents: montant,
+      currency: prixLigne?.currency ?? "eur",
     },
   });
 }

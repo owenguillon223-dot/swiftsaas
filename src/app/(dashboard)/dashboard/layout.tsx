@@ -22,6 +22,7 @@ export default async function DashboardLayout({
             <Link href="/dashboard" className="hover:underline">Tableau de bord</Link>
             <Link href="/dashboard/agent" className="hover:underline">Agent IA</Link>
             <Link href="/dashboard/billing" className="hover:underline">Facturation</Link>
+            <Link href="/dashboard/parrainage" className="hover:underline">Parrainage</Link>
             <Link href="/dashboard/settings" className="hover:underline">Paramètres</Link>
             <span className="text-muted-foreground">{session?.user?.email}</span>
             <form

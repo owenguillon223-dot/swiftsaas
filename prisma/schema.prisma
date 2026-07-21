@@ -25,6 +25,13 @@ model User {
 
   stripeCustomerId String? @unique
 
+  // ---- Parrainage ----
+  referralCode  String    @unique
+  referredById  String?
+  referredBy    User?     @relation("UserReferrals", fields: [referredById], references: [id])
+  referrals     User[]    @relation("UserReferrals")
+  referralRewards ReferralReward[]
+
   accounts      Account[]
   sessions      Session[]
   subscriptions Subscription[]
@@ -171,6 +178,32 @@ model AgentRun {
 
   @@index([userId])
   @@map("agent_runs")
+}
+
+// ---------- Programme de parrainage ----------
+
+model ReferralReward {
+  id             String   @id @default(cuid())
+  referrerId     String
+  referrer       User     @relation(fields: [referrerId], references: [id], onDelete: Cascade)
+
+  // Un seul reward par filleul : commission sur son premier paiement.
+  referredUserId String   @unique
+
+  amountCents    Int
+  currency       String   @default("eur")
+  status         ReferralRewardStatus @default(PENDING)
+
+  createdAt      DateTime @default(now())
+
+  @@index([referrerId])
+  @@map("referral_rewards")
+}
+
+enum ReferralRewardStatus {
+  PENDING
+  CONFIRMED
+  PAID
 }
 
 // ---------- Générateur de SaaS (item 6 de la feuille de route) ----------
