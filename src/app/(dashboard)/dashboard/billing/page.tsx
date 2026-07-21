@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Bot, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
@@ -36,7 +37,10 @@ export default function BillingPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Gérer mon abonnement</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <CreditCard className="h-4 w-4 text-primary" />
+            Gérer mon abonnement
+          </CardTitle>
           <CardDescription>
             Accédez au portail Stripe pour changer de plan, mettre à jour votre carte ou télécharger vos factures.
           </CardDescription>
@@ -54,7 +58,11 @@ export default function BillingPage() {
             <CardTitle className="text-base">Plan mensuel</CardTitle>
             <CardDescription>19€ / mois</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-3">
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Bot className="h-3.5 w-3.5 text-primary" />
+              Agent IA inclus — 0,10€ par run au-delà du forfait
+            </p>
             <Button
               className="w-full"
               onClick={() => lancerCheckout(process.env.NEXT_PUBLIC_STRIPE_PRICE_MENSUEL ?? "")}

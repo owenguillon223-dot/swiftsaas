@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import { auth, signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 
@@ -13,7 +14,8 @@ export default async function DashboardLayout({
     <div className="min-h-screen">
       <header className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/dashboard" className="text-lg font-bold">
+          <Link href="/dashboard" className="flex items-center gap-2 text-lg font-bold">
+            <Sparkles className="h-4 w-4 text-primary" />
             SwiftSaaS
           </Link>
           <nav className="flex items-center gap-6 text-sm">

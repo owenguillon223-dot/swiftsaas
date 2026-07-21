@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { auth } from "@/lib/auth";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
@@ -42,10 +43,20 @@ export async function POST(request: Request) {
     });
   }
 
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+    { price: priceId, quantity: 1 },
+  ];
+
+  // Le plan mensuel inclut la facturation à l'usage des runs d'agent (même
+  // intervalle de facturation) — un price "metered" ne prend pas de quantity.
+  if (priceId === process.env.STRIPE_PRICE_ID_MENSUEL && process.env.STRIPE_PRICE_ID_AGENT_RUN) {
+    lineItems.push({ price: process.env.STRIPE_PRICE_ID_AGENT_RUN });
+  }
+
   const checkoutSession = await stripe.checkout.sessions.create({
     customer: stripeCustomerId,
     mode: mode === "payment" ? "payment" : "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
+    line_items: lineItems,
     success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing?succes=1`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing?annule=1`,
     metadata: { userId: utilisateur.id },

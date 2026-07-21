@@ -77,10 +77,36 @@ export async function POST(request: Request) {
 
   const { reported } = await reportAgentRunUsage({ customerId: stripeCustomerId });
 
+  await prisma.agentRun.create({
+    data: {
+      userId: utilisateur.id,
+      provider: provider.id,
+      prompt,
+      finalAnswer: result.finalAnswer,
+      iterations: result.iterations,
+      billed: reported,
+    },
+  });
+
   return NextResponse.json({
     finalAnswer: result.finalAnswer,
     iterations: result.iterations,
     trace: result.trace,
     billing: { reported, customerId: stripeCustomerId },
   });
+}
+
+export async function GET() {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+  }
+
+  const runs = await prisma.agentRun.findMany({
+    where: { userId: (session.user as { id: string }).id },
+    orderBy: { createdAt: "desc" },
+    take: 20,
+  });
+
+  return NextResponse.json({ runs });
 }

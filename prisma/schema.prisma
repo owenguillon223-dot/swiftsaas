@@ -30,6 +30,7 @@ model User {
   subscriptions Subscription[]
   payments      Payment[]
   passwordResetTokens PasswordResetToken[]
+  agentRuns     AgentRun[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -151,6 +152,25 @@ enum PaymentStatus {
   SUCCEEDED
   FAILED
   REFUNDED
+}
+
+// ---------- Agent IA : historique des runs ----------
+
+model AgentRun {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider    String
+  prompt      String   @db.Text
+  finalAnswer String   @db.Text
+  iterations  Int
+  billed      Boolean  @default(false)
+
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@map("agent_runs")
 }
 
 // ---------- Générateur de SaaS (item 6 de la feuille de route) ----------
