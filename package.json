@@ -1,27 +1,58 @@
 {
   "name": "swiftsaas",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Agent SaaS boilerplate: multi-provider AI agent loop with Stripe usage-based billing",
+  "description": "SwiftSaaS - Boilerplate SaaS clé en main en français (Next.js, Prisma, NextAuth, Stripe)",
+  "license": "SEE LICENSE IN docs/LICENSE.md",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "generate:saas": "tsx scripts/generate-saas.ts"
   },
   "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.5.4",
+    "@prisma/client": "^5.18.0",
+    "prisma": "^5.18.0",
+    "next-auth": "5.0.0-beta.20",
+    "@auth/prisma-adapter": "^2.4.2",
+    "bcryptjs": "^2.4.3",
+    "stripe": "^17.4.0",
     "@anthropic-ai/sdk": "^0.32.1",
-    "next": "^15.1.0",
     "openai": "^4.73.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "stripe": "^17.4.0"
+    "resend": "^4.0.0",
+    "@react-email/components": "^0.0.25",
+    "zod": "^3.23.8",
+    "react-hook-form": "^7.52.2",
+    "@hookform/resolvers": "^3.9.0",
+    "tailwind-merge": "^2.5.2",
+    "clsx": "^2.1.1",
+    "class-variance-authority": "^0.7.0",
+    "lucide-react": "^0.427.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "typescript": "^5.7.2"
+    "@types/node": "^20.14.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/bcryptjs": "^2.4.6",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9",
+    "tsx": "^4.16.5",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }
