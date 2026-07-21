@@ -2,64 +2,70 @@ export default function ConfidentialitePage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16 prose prose-neutral">
       <h1>Politique de confidentialité</h1>
-      <p><em>Dernière mise à jour : à compléter</em></p>
+      <p><em>Dernière mise à jour : 21 juillet 2026</em></p>
 
-      <h2>1. Responsable du traitement</h2>
+      <h2>Responsable du traitement</h2>
       <p>
-        [Votre société], [adresse], est responsable du traitement des données personnelles collectées
-        sur ce site, conformément au Règlement Général sur la Protection des Données (RGPD).
+        Owen Guillon, auto-entrepreneur (SwiftSaaS), 13 rue de la Treille,
+        28130 Pierres — owenguillon223@gmail.com
       </p>
 
-      <h2>2. Données collectées</h2>
+      <h2>Données collectées</h2>
+      <p>
+        Dans le cadre de l&apos;utilisation du site et du dashboard, SwiftSaaS peut
+        collecter :
+      </p>
       <ul>
-        <li>Données d'identification : nom, adresse email</li>
-        <li>Données de connexion : mot de passe (haché), historique de connexion</li>
-        <li>Données de facturation : traitées par Stripe (nous ne stockons pas les numéros de carte)</li>
+        <li>Email, nom (à la création de compte)</li>
+        <li>
+          Données de paiement (traitées directement par Stripe, jamais stockées
+          par SwiftSaaS)
+        </li>
+        <li>Données techniques (logs, cookies techniques nécessaires au fonctionnement)</li>
       </ul>
 
-      <h2>3. Finalités du traitement</h2>
+      <h2>Finalité</h2>
+      <p>Ces données sont utilisées pour :</p>
       <ul>
-        <li>Gestion des comptes utilisateurs et de l'authentification</li>
-        <li>Gestion des abonnements et de la facturation</li>
-        <li>Envoi d'emails transactionnels (confirmation, réinitialisation de mot de passe)</li>
-        <li>Amélioration du service</li>
+        <li>Gérer les comptes utilisateurs et les commandes</li>
+        <li>Fournir l&apos;accès aux produits achetés</li>
+        <li>Répondre aux demandes de support</li>
       </ul>
 
-      <h2>4. Base légale</h2>
+      <h2>Base légale</h2>
       <p>
-        Les traitements reposent sur l'exécution du contrat (fourniture du service) et, le cas échéant,
-        sur le consentement de l'utilisateur (emails marketing).
+        Exécution du contrat (vente) et intérêt légitime (support, sécurité du
+        service).
       </p>
 
-      <h2>5. Destinataires des données</h2>
+      <h2>Destinataires</h2>
       <p>
-        Les données peuvent être transmises à nos sous-traitants techniques : Vercel (hébergement),
-        Stripe (paiements), Resend (emails transactionnels), dans le cadre strict de leurs missions.
+        Les données de paiement sont traitées par Stripe (stripe.com), conformément
+        à sa propre politique de confidentialité. Aucune donnée n&apos;est vendue à des
+        tiers.
       </p>
 
-      <h2>6. Durée de conservation</h2>
+      <h2>Durée de conservation</h2>
       <p>
-        Les données sont conservées pendant la durée de la relation contractuelle, puis archivées
-        conformément aux obligations légales.
+        Les données sont conservées pendant la durée de la relation commerciale,
+        puis archivées selon les obligations légales (comptables notamment),
+        généralement 5 à 10 ans selon la nature du document.
       </p>
 
-      <h2>7. Droits des utilisateurs</h2>
+      <h2>Droits des utilisateurs</h2>
       <p>
-        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de
-        limitation, d'opposition et de portabilité de vos données. Pour exercer ces droits, contactez :
-        [contact@votredomaine.fr].
+        Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification,
+        d&apos;effacement et d&apos;opposition sur vos données. Pour l&apos;exercer, contactez
+        owenguillon223@gmail.com.
       </p>
 
-      <h2>8. Cookies</h2>
+      <h2>Cookies</h2>
       <p>
-        Ce site utilise uniquement des cookies strictement nécessaires au fonctionnement du service
-        (session d'authentification). Aucun cookie de tracking publicitaire n'est utilisé par défaut.
-      </p>
-
-      <p className="text-sm text-muted-foreground">
-        ⚠️ Ce document est un modèle fourni à titre indicatif dans le cadre du boilerplate SwiftSaaS.
-        Il ne constitue pas un conseil juridique. Faites-le valider par un professionnel du droit avant
-        mise en ligne, et adaptez-le à votre activité réelle et à vos sous-traitants effectifs.
+        Le site utilise des cookies techniques nécessaires à son fonctionnement
+        (session, authentification). Si des outils de mesure d&apos;audience (Google
+        Analytics, Vercel Analytics, ou équivalent) sont ajoutés ultérieurement, un
+        bandeau de consentement conforme au RGPD sera mis en place avant toute
+        collecte.
       </p>
     </main>
   );

@@ -2,63 +2,100 @@ export default function CGVPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16 prose prose-neutral">
       <h1>Conditions Générales de Vente (CGV)</h1>
-      <p><em>Dernière mise à jour : à compléter</em></p>
+      <p><em>Dernière mise à jour : 21 juillet 2026</em></p>
 
       <h2>Article 1 — Objet</h2>
       <p>
-        Les présentes conditions générales de vente régissent les relations contractuelles entre
-        [Votre société] (« l'Éditeur ») et toute personne physique ou morale (« le Client ») souhaitant
-        souscrire à un abonnement ou effectuer un achat sur [nom de votre SaaS].
+        Les présentes CGV régissent la vente de générateurs SaaS et de templates
+        d&apos;applications web proposés sur le site SwiftSaaS, édité par Owen Guillon,
+        auto-entrepreneur.
       </p>
 
-      <h2>Article 2 — Description du service</h2>
+      <h2>Article 2 — Produits</h2>
+      <p>SwiftSaaS propose :</p>
+      <ul>
+        <li>Des générateurs SaaS (outils permettant de créer des applications)</li>
+        <li>Des templates d&apos;applications web (code source prêt à l&apos;emploi)</li>
+      </ul>
       <p>
-        Le service consiste en [décrivez votre SaaS]. L'accès au service est proposé sous forme
-        d'abonnement mensuel ou annuel, ou de paiement unique selon l'offre choisie.
+        Chaque produit est décrit sur sa page dédiée (fonctionnalités, format de
+        livraison, licence associée).
       </p>
 
-      <h2>Article 3 — Prix et modalités de paiement</h2>
+      <h2>Article 3 — Prix</h2>
       <p>
-        Les prix sont indiqués en euros, toutes taxes comprises. Le paiement est effectué en ligne via
-        notre prestataire de paiement sécurisé Stripe, par carte bancaire.
+        Les prix sont indiqués en euros, TVA non applicable (article 293 B du CGI).
+        SwiftSaaS se réserve le droit de modifier ses prix à tout moment ; le prix
+        appliqué est celui en vigueur au moment de la commande.
       </p>
 
-      <h2>Article 4 — Durée et résiliation</h2>
+      <h2>Article 4 — Commande et paiement</h2>
       <p>
-        Les abonnements sont reconduits tacitement à chaque échéance (mensuelle ou annuelle). Le Client
-        peut résilier à tout moment depuis son espace client (portail de facturation Stripe) ; la résiliation
-        prend effet à la fin de la période en cours.
+        Les paiements sont sécurisés via Stripe. La commande est validée après
+        confirmation du paiement. Un email de confirmation est envoyé à l&apos;adresse
+        fournie par l&apos;acheteur.
       </p>
 
-      <h2>Article 5 — Droit de rétractation</h2>
+      <h2>Article 5 — Livraison</h2>
       <p>
-        Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation ne s'applique
-        pas aux contenus numériques fournis immédiatement après accès et exécution intégrale, sauf disposition
-        contraire indiquée lors de l'achat.
+        Les produits étant numériques, l&apos;accès est fourni immédiatement après
+        paiement (téléchargement ou accès dashboard, selon le produit).
       </p>
 
-      <h2>Article 6 — Responsabilité</h2>
+      <h2>Article 6 — Droit de rétractation</h2>
       <p>
-        L'Éditeur s'engage à fournir le service avec diligence, sans garantie de résultat. La responsabilité
-        de l'Éditeur ne saurait être engagée en cas de force majeure ou de fait imputable à un tiers.
+        Conformément à l&apos;article L221-28 du Code de la consommation, le droit de
+        rétractation ne s&apos;applique pas aux contenus numériques dont l&apos;exécution a
+        commencé avec l&apos;accord préalable du client et renoncement exprès à son droit
+        de rétractation, ce que le client accepte au moment de l&apos;achat.
       </p>
 
-      <h2>Article 7 — Données personnelles</h2>
+      <h2>Article 7 — Licence d&apos;utilisation</h2>
       <p>
-        Le traitement des données personnelles est décrit dans notre{" "}
-        <a href="/legal/confidentialite">politique de confidentialité</a>.
+        L&apos;achat d&apos;un template ou d&apos;un générateur SaaS sur SwiftSaaS accorde à
+        l&apos;acheteur une licence d&apos;utilisation non exclusive et non transférable, dans
+        les conditions suivantes :
       </p>
+      <ul>
+        <li>
+          Usage autorisé : l&apos;acheteur peut utiliser le produit (template ou code
+          généré) pour ses propres projets, y compris dans le cadre de projets
+          réalisés pour des clients (freelance, agence, prestation).
+        </li>
+        <li>
+          Usage interdit : l&apos;acheteur ne peut pas revendre, redistribuer,
+          sous-licencier ou publier le produit tel quel (ou après modification
+          mineure) en tant que produit autonome, template ou générateur destiné à
+          la revente.
+        </li>
+        <li>
+          Toute exception à cette règle (licence étendue, revente autorisée) devra
+          faire l&apos;objet d&apos;un accord écrit explicite avec SwiftSaaS.
+        </li>
+        <li>
+          Le non-respect de ces conditions peut entraîner la révocation de la
+          licence sans remboursement.
+        </li>
+      </ul>
 
-      <h2>Article 8 — Droit applicable et litiges</h2>
+      <h2>Article 8 — Responsabilité</h2>
       <p>
-        Les présentes CGV sont soumises au droit français. En cas de litige, les tribunaux français seront
-        seuls compétents, après tentative de résolution amiable.
+        SwiftSaaS s&apos;efforce d&apos;assurer l&apos;exactitude des informations sur le site mais
+        ne garantit pas l&apos;absence d&apos;erreur. Les produits sont livrés « en l&apos;état » ;
+        SwiftSaaS ne saurait être tenu responsable d&apos;un usage inapproprié des
+        générateurs ou templates.
       </p>
 
-      <p className="text-sm text-muted-foreground">
-        ⚠️ Ce document est un modèle fourni à titre indicatif dans le cadre du boilerplate SwiftSaaS.
-        Il ne constitue pas un conseil juridique. Faites-le valider par un professionnel du droit avant
-        mise en ligne, et adaptez-le à votre activité réelle.
+      <h2>Article 9 — Support</h2>
+      <p>
+        Toute question relative à une commande peut être adressée à
+        owenguillon223@gmail.com.
+      </p>
+
+      <h2>Article 10 — Droit applicable</h2>
+      <p>
+        Les présentes CGV sont soumises au droit français. En cas de litige, une
+        solution amiable sera recherchée avant toute action judiciaire.
       </p>
     </main>
   );
