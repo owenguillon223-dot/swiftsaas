@@ -121,7 +121,7 @@ export default function RelanceLandingPage() {
 
       <footer className="border-t">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground sm:flex-row">
-          <span>© {new Date().getFullYear()} RelanceIA — un produit SwiftSaaS.</span>
+          <span>© {new Date().getFullYear()} RelanceIA.</span>
           <div className="flex gap-4">
             <Link href="/legal/mentions-legales">Mentions légales</Link>
             <Link href="/legal/cgv">CGV</Link>
