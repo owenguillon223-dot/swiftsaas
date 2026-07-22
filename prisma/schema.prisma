@@ -44,6 +44,9 @@ model User {
   passwordResetTokens PasswordResetToken[]
   agentRuns     AgentRun[]
 
+  // ---- RelanceIA ----
+  invoices      Invoice[]
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -237,4 +240,49 @@ enum GenerationStatus {
   RUNNING
   SUCCEEDED
   FAILED
+}
+
+// ---------- RelanceIA : relance automatique de factures impayées ----------
+
+model Invoice {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  clientName    String
+  clientEmail   String
+  amountCents   Int
+  currency      String    @default("eur")
+  dueDate       DateTime
+  status        InvoiceStatus @default(PENDING)
+
+  reminders     ReminderLog[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("relance_invoices")
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
+
+model ReminderLog {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  tone        String
+  subject     String
+  content     String   @db.Text
+  sent        Boolean  @default(false)
+
+  createdAt   DateTime @default(now())
+
+  @@index([invoiceId])
+  @@map("relance_reminder_logs")
 }

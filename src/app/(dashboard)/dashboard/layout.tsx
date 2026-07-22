@@ -21,6 +21,7 @@ export default async function DashboardLayout({
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/dashboard" className="hover:underline">Tableau de bord</Link>
             <Link href="/dashboard/agent" className="hover:underline">Agent IA</Link>
+            <Link href="/dashboard/relance" className="hover:underline">RelanceIA</Link>
             <Link href="/dashboard/billing" className="hover:underline">Facturation</Link>
             <Link href="/dashboard/parrainage" className="hover:underline">Parrainage</Link>
             <Link href="/dashboard/settings" className="hover:underline">Paramètres</Link>
